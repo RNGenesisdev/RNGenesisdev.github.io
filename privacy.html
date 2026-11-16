@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - Fresh Deps</title>
+  <meta name="description" content="How the Fresh Deps plugin and the RNGenesis website handle personal data.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">RNGenesis</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="eula.html">EULA</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: 12 November 2026</p>
+  <p class="updated">Version 1.0</p>
+
+  <section>
+    <h2>1. Who is responsible</h2>
+    <p>Fresh Deps is made by RNGenesis, an individual developer in Saudi Arabia. Contact: <a href="mailto:rngenesisdev@gmail.com">rngenesisdev@gmail.com</a>.</p>
+  </section>
+
+  <section>
+    <h2>2. The short version</h2>
+    <ul>
+      <li>RNGenesis runs no server for this plugin and receives no data from it.</li>
+      <li>There is no telemetry, analytics, crash reporting or advertising.</li>
+      <li>To show versions, the plugin asks package registries about the packages named in your build files. Those requests go straight from your computer to the registry.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. What the plugin sends, and where</h2>
+    <p>Every request is a GET made by your IDE, through the IDE's proxy settings. Requests to the public hosts below use HTTPS. A private registry is asked at the address your own config gives, which can be http. Each host therefore sees your IP address, the package name in the URL, and the User-Agent <code>FreshDeps (JetBrains IDE plugin)</code>. The IDE adds its own standard headers. Registries can redirect to their own download hosts, and the plugin follows those redirects.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Host</th>
+            <th scope="col">When</th>
+            <th scope="col">What is sent</th>
+            <th scope="col">Credentials sent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>registry.npmjs.org (npm)</td>
+            <td>When a package.json file is open or scanned.</td>
+            <td>The package name, to find the latest version. For an update, the package document. For release notes (Pro), also the newest version number.</td>
+            <td>None for Free users. With Pro, the login your own .npmrc holds for that registry, if any.</td>
+          </tr>
+          <tr>
+            <td>pypi.org (PyPI)</td>
+            <td>When a pyproject.toml file is open or scanned.</td>
+            <td>The project name, to find the latest version. For an update, the project's JSON data. For release notes (Pro), the project name and newest version.</td>
+            <td>Never. PyPI never receives a login.</td>
+          </tr>
+          <tr>
+            <td>crates.io</td>
+            <td>When a Cargo.toml file is open or scanned.</td>
+            <td>The crate name. No more than one request per second.</td>
+            <td>Never. The crates.io token is never sent.</td>
+          </tr>
+          <tr>
+            <td>repo.maven.apache.org (Maven Central)</td>
+            <td>When a pom.xml, build.gradle, build.gradle.kts or Gradle version catalog is open or scanned.</td>
+            <td>The group and artifact, as a path, to read the list of versions. For release notes (Pro), the newest version's pom file.</td>
+            <td>None, unless your settings.xml or gradle.properties holds a login for a repository at that address and you have Pro.</td>
+          </tr>
+          <tr>
+            <td>dl.google.com (Google's Maven repository)</td>
+            <td>The same as Maven Central. Asked first for Android and Google mobile groups and plugin ids (androidx, android, com.android, com.google.android, com.google.firebase, com.google.gms, com.google.mlkit, com.google.ar), then Maven Central or the Gradle plugin portal.</td>
+            <td>The group and artifact, or the Gradle plugin id, as a path.</td>
+            <td>The same as Maven Central.</td>
+          </tr>
+          <tr>
+            <td>plugins.gradle.org (Gradle plugin portal)</td>
+            <td>When a build.gradle, build.gradle.kts or Gradle version catalog that names a plugin is open or scanned.</td>
+            <td>The Gradle plugin id, as a path.</td>
+            <td>The same as Maven Central.</td>
+          </tr>
+          <tr>
+            <td>api.github.com</td>
+            <td>Only when you open a release-notes card (Pro).</td>
+            <td>The owner and name of the dependency's public repository, to read its releases, up to two pages. A cache header is also sent.</td>
+            <td>Your GitHub token, only if you saved one in Settings &gt; Tools &gt; Fresh Deps or set GITHUB_TOKEN. It is sent only to api.github.com, never to another host after a redirect. Without a token the request is anonymous.</td>
+          </tr>
+          <tr>
+            <td>Other addresses of the same public registries, only if your own config names them: registry.yarnpkg.com, pypi.python.org, repo1.maven.org, maven.google.com</td>
+            <td>The same as the registry each one stands for.</td>
+            <td>The same as the registry each one stands for.</td>
+            <td>None for Free users.</td>
+          </tr>
+          <tr>
+            <td>Private registries you configured (Pro only)</td>
+            <td>Any other host named in your own files.</td>
+            <td>The package name, and for npm and Maven release notes the newest version.</td>
+            <td>The login your files hold for that host. Without a Pro licence these hosts are never contacted and no login is sent anywhere.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Scanned means read by the Fresh Deps tool window, which reads every build file in the project once you open it. Answers are reused for 1 hour.</p>
+
+    <p>JetBrains: the plugin itself makes no request to JetBrains. Your IDE obtains and checks licences with JetBrains. The plugin only reads the licence stamp the IDE holds and checks its signature offline, against JetBrains' public certificates built into the plugin.</p>
+
+    <p>The version you currently use is never sent. Where a version appears in a request, it is the newest published version, used to find release notes.</p>
+    <p>No other file contents, project name, file path, user name or machine identifier are sent by the plugin itself.</p>
+    <p>Clicking a link in a release-notes card opens your web browser at that address. The plugin does not load images or other remote content inside the card.</p>
+  </section>
+
+  <section>
+    <h2>4. Credentials the plugin reads on your computer</h2>
+    <p>The plugin reads these files for every user, on your computer, to learn which registry a package belongs to. A login from them is sent only with a Pro licence, and only to the registry it belongs to.</p>
+    <ul>
+      <li><strong>npm:</strong> ~/.npmrc, or the file named by the npm_config_userconfig variable, and the project's .npmrc. Tokens, _auth values and user and password pairs become the login for the matching registry address only. ${VAR} in .npmrc is replaced from your environment, as npm does.</li>
+      <li><strong>Maven:</strong> server logins in ~/.m2/settings.xml.</li>
+      <li><strong>Gradle:</strong> gradle.properties in GRADLE_USER_HOME or ~/.gradle, for repositories declared with password credentials.</li>
+      <li><strong>Python:</strong> uv.toml (user and system), pip.conf or pip.ini, .netrc or _netrc (or the file named by NETRC), and the environment variables UV_INDEX_&lt;NAME&gt;_USERNAME and _PASSWORD, POETRY_HTTP_BASIC_&lt;NAME&gt;_USERNAME and _PASSWORD, PIP_INDEX_URL, PIP_EXTRA_INDEX_URL, UV_INDEX, UV_EXTRA_INDEX_URL, UV_DEFAULT_INDEX and UV_INDEX_URL. A login written inside an index address (user:password@host) is read too. The system keyring is never read.</li>
+      <li><strong>Cargo:</strong> the config and credentials files in CARGO_HOME or ~/.cargo, the .cargo config files of a project you marked as trusted, and the CARGO_REGISTRIES_&lt;NAME&gt;_TOKEN variable. A token stays with its own index.</li>
+      <li><strong>GitHub token:</strong> an entry in the IDE's password store whose name contains "Fresh Deps" and "GitHub token", or else the GITHUB_TOKEN variable.</li>
+    </ul>
+    <p>Safeguards:</p>
+    <ul>
+      <li>A credential is chosen again for every redirect, and is never sent after a change from https to http.</li>
+      <li>A project's own config files (.npmrc, Maven repositories, Gradle scripts, Cargo config and Poetry sources) decide where requests go only after you mark the project as trusted in the IDE.</li>
+      <li>Credentials and the text of these files are kept in memory only while the IDE runs. The plugin does not write your credentials to disk. The one exception is a GitHub token you type in, which is saved to the IDE's password store.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>5. What is stored on your computer</h2>
+    <ul>
+      <li><strong>Ignored version lines</strong> ("Ignore 19.x"): the registry, package name and version line, stored in the project's .idea/workspace.xml. Remove them in Settings &gt; Tools &gt; Fresh Deps.</li>
+      <li><strong>GitHub token</strong>, if you enter one: stored in the IDE's password store, which is your OS keychain or the IDE's KeePass file, depending on how your IDE is set up. Remove it with the remove button on the same settings page. The settings page never shows the saved token.</li>
+      <li><strong>Caches:</strong> registry answers are kept for 1 hour, failed lookups for 5 minutes, and GitHub release lists for 1 hour. They are kept in memory and cleared when the IDE closes. They are not written to disk.</li>
+      <li><strong>IDE log:</strong> when a lookup or a release-notes request fails, the plugin writes the package name, the registry address and the error into your IDE's own log file. The plugin removes logins from the addresses it logs. The error text comes from the IDE and can include the full request address. The log stays on your computer unless you send it to someone.</li>
+      <li>No other settings are stored.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. Data categories and purposes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">Recipient</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IP address, User-Agent and package names (with the newest version, for release notes)</td>
+            <td>Fetching version numbers and release notes.</td>
+            <td>The registry operators listed in section 8, or the private registry you configured, which you already use to install those packages. RNGenesis does not receive this data.</td>
+          </tr>
+          <tr>
+            <td>Registry credentials and the GitHub token</td>
+            <td>Logging you in to your own registries and to GitHub.</td>
+            <td>Only that registry, or api.github.com.</td>
+          </tr>
+          <tr>
+            <td>Support email: your address, your message and anything you attach</td>
+            <td>Answering your question.</td>
+            <td>RNGenesis, through Gmail (Google).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>RNGenesis does not sell or share personal data, and has none from the plugin to share.</p>
+    <p>Support email is deleted within 24 months of the last message.</p>
+  </section>
+
+  <section>
+    <h2>7. Purchases and licences</h2>
+    <p>Pro licences are sold through JetBrains Marketplace. JetBrains processes the order, payment, invoices and refund requests, and holds your account and payment data under its own privacy notice: <a href="https://www.jetbrains.com/legal/docs/privacy/privacy/">JetBrains Privacy Notice</a>.</p>
+    <p>RNGenesis does not receive your payment card details.</p>
+    <p>JetBrains may share limited order and licence information with RNGenesis for accounting and support. RNGenesis uses it only for those purposes.</p>
+  </section>
+
+  <section>
+    <h2>8. Third-party registries</h2>
+    <p>The plugin contacts these services. Each one has its own privacy policy.</p>
+    <ul>
+      <li>npm (registry.npmjs.org): <a href="https://docs.npmjs.com/policies/privacy/">npm privacy policy</a></li>
+      <li>PyPI (pypi.org), run by the Python Software Foundation: <a href="https://policies.python.org/pypi.org/Privacy-Notice/">PyPI privacy notice</a></li>
+      <li>crates.io, run by the Rust Foundation: <a href="https://rustfoundation.org/policy/privacy-policy/">Rust Foundation privacy policy</a></li>
+      <li>Maven Central (repo.maven.apache.org), run by Sonatype: <a href="https://www.sonatype.com/privacy-policy">Sonatype privacy policy</a></li>
+      <li>Google's Maven repository (dl.google.com), run by Google: <a href="https://policies.google.com/privacy">Google privacy policy</a></li>
+      <li>Gradle plugin portal (plugins.gradle.org), run by Gradle, Inc.: <a href="https://develocity.ai/legal/privacy/">Gradle privacy policy</a></li>
+      <li>GitHub (api.github.com): <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>9. Your choices and how to object</h2>
+    <ul>
+      <li>To stop all network requests from the plugin, disable or uninstall it. You can also switch each kind of hint off in Settings &gt; Editor &gt; Inlay Hints and keep the Fresh Deps tool window closed.</li>
+      <li>To send no token to GitHub, do not save one in the settings, and do not set the GITHUB_TOKEN variable.</li>
+      <li>Requests to private registries happen only with a Pro licence. Config files in projects you have not marked as trusted are ignored.</li>
+      <li>For questions, access, deletion or objection about support email, write to <a href="mailto:rngenesisdev@gmail.com">rngenesisdev@gmail.com</a>.</li>
+      <li>You can ask what we hold about you, and ask us to correct or delete it.</li>
+    </ul>
+    <p>We answer privacy requests within 30 days.</p>
+  </section>
+
+  <section>
+    <h2>10. Children and changes</h2>
+    <p>Fresh Deps is not directed at children.</p>
+    <p>We will update this page and its date. Material changes are noted in the plugin's change notes.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="eula.html">EULA</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </nav>
+    <p>Contact: <a href="mailto:rngenesisdev@gmail.com">rngenesisdev@gmail.com</a></p>
+    <p>&copy; 2026 RNGenesis</p>
+    <p>This site uses no cookies, no scripts and no trackers.</p>
+    <p>This site is hosted on GitHub Pages. GitHub, as host, receives your IP address and browser details when you load a page. See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
